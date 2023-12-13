@@ -34,15 +34,6 @@ function GetRecorderType(mediaStream, config) {
     // video recorder (in WebM format)
     if (config.type === 'video' && (isChrome || isOpera)) {
         recorder = WhammyRecorder;
-
-        if (typeof WebAssemblyRecorder !== 'undefined' && typeof ReadableStream !== 'undefined') {
-            recorder = WebAssemblyRecorder;
-        }
-    }
-
-    // video recorder (in Gif format)
-    if (config.type === 'gif') {
-        recorder = GifRecorder;
     }
 
     // html2canvas recording!
@@ -50,7 +41,7 @@ function GetRecorderType(mediaStream, config) {
         recorder = CanvasRecorder;
     }
 
-    if (isMediaRecorderCompatible() && recorder !== CanvasRecorder && recorder !== GifRecorder && typeof MediaRecorder !== 'undefined' && 'requestData' in MediaRecorder.prototype) {
+    if (isMediaRecorderCompatible() && recorder !== CanvasRecorder && typeof MediaRecorder !== 'undefined' && 'requestData' in MediaRecorder.prototype) {
         if (getTracks(mediaStream, 'video').length || getTracks(mediaStream, 'audio').length) {
             // audio-only recording
             if (config.type === 'audio') {

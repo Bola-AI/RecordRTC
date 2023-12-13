@@ -10,7 +10,7 @@
  * @class
  * @example
  * var recorder = RecordRTC(mediaStream or [arrayOfMediaStream], {
- *     type: 'video', // audio or video or gif or canvas
+ *     type: 'video', // audio or video or canvas
  *     recorderType: MediaStreamRecorder || CanvasRecorder || StereoAudioRecorder || Etc
  * });
  * recorder.startRecording();
@@ -115,12 +115,7 @@ function RecordRTC(mediaStream, config) {
             console.log('Stopped recording ' + config.type + ' stream.');
         }
 
-        if (config.type !== 'gif') {
-            mediaRecorder.stop(_callback);
-        } else {
-            mediaRecorder.stop();
-            _callback();
-        }
+        mediaRecorder.stop(_callback);
 
         setState('stopped');
 

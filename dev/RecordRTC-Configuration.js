@@ -25,10 +25,8 @@ function RecordRTCConfiguration(mediaStream, config) {
     }
 
     if (config.recorderType && !config.type) {
-        if (config.recorderType === WhammyRecorder || config.recorderType === CanvasRecorder || (typeof WebAssemblyRecorder !== 'undefined' && config.recorderType === WebAssemblyRecorder)) {
+        if (config.recorderType === WhammyRecorder || config.recorderType === CanvasRecorder) {
             config.type = 'video';
-        } else if (config.recorderType === GifRecorder) {
-            config.type = 'gif';
         } else if (config.recorderType === StereoAudioRecorder) {
             config.type = 'audio';
         } else if (config.recorderType === MediaStreamRecorder) {

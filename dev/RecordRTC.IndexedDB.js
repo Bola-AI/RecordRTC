@@ -1,6 +1,6 @@
 /**
  * This method can be used to get all recorded blobs from IndexedDB storage.
- * @param {string} type - 'all' or 'audio' or 'video' or 'gif'
+ * @param {string} type - 'all' or 'audio' or 'video'
  * @param {function} callback - Callback function to get all stored blobs.
  * @method
  * @memberof RecordRTC
@@ -8,7 +8,6 @@
  * RecordRTC.getFromDisk('all', function(dataURL, type){
  *     if(type === 'audio') { }
  *     if(type === 'video') { }
- *     if(type === 'gif')   { }
  * });
  */
 RecordRTC.getFromDisk = function(type, callback) {
@@ -30,55 +29,24 @@ RecordRTC.getFromDisk = function(type, callback) {
 
 /**
  * This method can be used to store recorded blobs into IndexedDB storage.
- * @param {object} options - {audio: Blob, video: Blob, gif: Blob}
+ * @param {object} options - {audio: Blob, video: Blob}
  * @method
  * @memberof RecordRTC
  * @example
  * RecordRTC.writeToDisk({
  *     audio: audioBlob,
- *     video: videoBlob,
- *     gif  : gifBlob
+ *     video: videoBlob
  * });
  */
 RecordRTC.writeToDisk = function(options) {
     console.log('Writing recorded blob(s) to disk!');
     options = options || {};
-    if (options.audio && options.video && options.gif) {
-        options.audio.getDataURL(function(audioDataURL) {
-            options.video.getDataURL(function(videoDataURL) {
-                options.gif.getDataURL(function(gifDataURL) {
-                    DiskStorage.Store({
-                        audioBlob: audioDataURL,
-                        videoBlob: videoDataURL,
-                        gifBlob: gifDataURL
-                    });
-                });
-            });
-        });
-    } else if (options.audio && options.video) {
+    if (options.audio && options.video) {
         options.audio.getDataURL(function(audioDataURL) {
             options.video.getDataURL(function(videoDataURL) {
                 DiskStorage.Store({
                     audioBlob: audioDataURL,
                     videoBlob: videoDataURL
-                });
-            });
-        });
-    } else if (options.audio && options.gif) {
-        options.audio.getDataURL(function(audioDataURL) {
-            options.gif.getDataURL(function(gifDataURL) {
-                DiskStorage.Store({
-                    audioBlob: audioDataURL,
-                    gifBlob: gifDataURL
-                });
-            });
-        });
-    } else if (options.video && options.gif) {
-        options.video.getDataURL(function(videoDataURL) {
-            options.gif.getDataURL(function(gifDataURL) {
-                DiskStorage.Store({
-                    videoBlob: videoDataURL,
-                    gifBlob: gifDataURL
                 });
             });
         });
@@ -92,12 +60,6 @@ RecordRTC.writeToDisk = function(options) {
         options.video.getDataURL(function(videoDataURL) {
             DiskStorage.Store({
                 videoBlob: videoDataURL
-            });
-        });
-    } else if (options.gif) {
-        options.gif.getDataURL(function(gifDataURL) {
-            DiskStorage.Store({
-                gifBlob: gifDataURL
             });
         });
     }

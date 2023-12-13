@@ -10,12 +10,10 @@
  * DiskStorage.Store({
  *     audioBlob: yourAudioBlob,
  *     videoBlob: yourVideoBlob,
- *     gifBlob  : yourGifBlob
  * });
  * DiskStorage.Fetch(function(dataURL, type) {
  *     if(type === 'audioBlob') { }
  *     if(type === 'videoBlob') { }
- *     if(type === 'gifBlob')   { }
  * });
  * // DiskStorage.dataStoreName = 'recordRTC';
  * // DiskStorage.onError = function(error) { };
@@ -61,10 +59,6 @@ var DiskStorage = {
                 transaction.objectStore(self.dataStoreName).put(self.videoBlob, 'videoBlob');
             }
 
-            if (self.gifBlob) {
-                transaction.objectStore(self.dataStoreName).put(self.gifBlob, 'gifBlob');
-            }
-
             if (self.audioBlob) {
                 transaction.objectStore(self.dataStoreName).put(self.audioBlob, 'audioBlob');
             }
@@ -79,7 +73,6 @@ var DiskStorage = {
 
             getFromStore('audioBlob');
             getFromStore('videoBlob');
-            getFromStore('gifBlob');
         }
 
         request.onerror = self.onError;
@@ -115,7 +108,6 @@ var DiskStorage = {
      * DiskStorage.Fetch(function(dataURL, type) {
      *     if(type === 'audioBlob') { }
      *     if(type === 'videoBlob') { }
-     *     if(type === 'gifBlob')   { }
      * });
      */
     Fetch: function(callback) {
@@ -133,13 +125,11 @@ var DiskStorage = {
      * DiskStorage.Store({
      *     audioBlob: yourAudioBlob,
      *     videoBlob: yourVideoBlob,
-     *     gifBlob  : yourGifBlob
      * });
      */
     Store: function(config) {
         this.audioBlob = config.audioBlob;
         this.videoBlob = config.videoBlob;
-        this.gifBlob = config.gifBlob;
 
         this.init();
 
